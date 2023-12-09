@@ -29,8 +29,18 @@ fun Any?.printlnInline() = apply { println(this) }
 /**
  * Timing function.
  */
-fun <T>timing(block: () -> T) {
+fun <T> timing(block: () -> T) {
     measureTime {
         block.invoke()
     }.println()
+}
+
+fun <T> Sequence<T>.takeWhileInclusive(predicate: (T) -> Boolean) = sequence {
+    with(iterator()) {
+        while (hasNext()) {
+            val next = next()
+            yield(next)
+            if (!predicate(next)) break
+        }
+    }
 }

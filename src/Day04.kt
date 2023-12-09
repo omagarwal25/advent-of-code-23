@@ -20,29 +20,24 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val wins = input.indices.toMutableList()
+//        val wins = input.indices.toMutableList()
         val games = parseGames(input).map { (winning, ours) ->
             ours.count { it in winning }
         }
 
-        var count = 0
-
-        while (wins.isNotEmpty()) {
+        return generateSequence(input.indices.toList() to 0) { (wins, count) ->
             val win = wins.min()
-            val numOfMin = wins.count { it == win }
 
-            wins.removeAll { it == win }
-            count += numOfMin
+            val numOfMin = wins.count { it == win }
+            val removed = wins.filter { it != win }
 
             val numberOfWins = games[win]
-            val newTickets = (win+1)..(win+numberOfWins)
+            val newTickets = (win + 1)..(win + numberOfWins)
 
+            val temp = newTickets.flatMap { num -> List(numOfMin) { num } }
 
-            val temp = newTickets.flatMap { num -> List(numOfMin) {num} }
-
-            wins.addAll(temp)
-        }
-        return count
+            (removed + temp) to (count + numOfMin)
+        }.takeWhileInclusive { it.first.isNotEmpty() }.last().second
     }
 
 
