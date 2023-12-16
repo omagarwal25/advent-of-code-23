@@ -1,4 +1,4 @@
-enum class Direction {
+private enum class Direction {
     LEFT, RIGHT
 }
 

@@ -1,4 +1,4 @@
-data class Card(val value: Int, val jokerVariation: Boolean = false) : Comparable<Card> {
+private data class Card(val value: Int, val jokerVariation: Boolean = false) : Comparable<Card> {
     override fun compareTo(other: Card): Int {
         if (value == other.value) return 0
         if (value == Card("J").value && jokerVariation) return -1
@@ -31,7 +31,7 @@ data class Card(val value: Int, val jokerVariation: Boolean = false) : Comparabl
 }
 
 // hand of 5 cards
-data class Hand(val cards: List<Card>, val jokerVariation: Boolean = false) : Comparable<Hand> {
+private data class Hand(val cards: List<Card>, val jokerVariation: Boolean = false) : Comparable<Hand> {
     override fun toString(): String {
         return cards.joinToString(" ")
     }
@@ -174,7 +174,7 @@ fun main() {
             Hand(hand) to id.trim().toInt()
         }.sortedBy { (hand, _) ->
             hand
-        }.mapIndexed() { index, (_, id) ->
+        }.mapIndexed { index, (_, id) ->
             id * (index + 1)
         }.sum()
     }
@@ -185,11 +185,11 @@ fun main() {
         }.map { (hand, id) ->
             Hand(hand, true) to id.trim().toInt()
         }
-        .sortedBy { (hand, _) ->
-            hand
-        }.mapIndexed { index, (h, id) ->
-            id * (index + 1)
-        }.sum()
+            .sortedBy { (hand, _) ->
+                hand
+            }.mapIndexed { index, (h, id) ->
+                id * (index + 1)
+            }.sum()
     }
 
 

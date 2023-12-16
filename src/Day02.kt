@@ -1,4 +1,4 @@
-data class RGB(val r: Int, val g: Int, val b: Int)
+private data class RGB(val r: Int, val g: Int, val b: Int)
 
 fun main() {
     fun processInput(input: List<String>): List<Pair<Int, List<RGB>>> {
@@ -35,14 +35,14 @@ fun main() {
 
         val maxes = games.map { (id, runs) ->
             id to RGB(runs.maxOfOrNull { it.r } ?: 0,
-            runs.maxOfOrNull { it.g } ?: 0,
-            runs.maxOfOrNull { it.b }?: 0)
+                runs.maxOfOrNull { it.g } ?: 0,
+                runs.maxOfOrNull { it.b } ?: 0)
         }
 
         return maxes.sumOf { (id, rgb) ->
-            val (r,g,b) = rgb
+            val (r, g, b) = rgb
 
-            if (r > maxRed || g> maxGreen || b > maxBlue) 0
+            if (r > maxRed || g > maxGreen || b > maxBlue) 0
             else id
         }
     }
@@ -53,8 +53,8 @@ fun main() {
         return games.map { (_, runs) ->
             RGB(runs.maxOfOrNull { it.r } ?: 0,
                 runs.maxOfOrNull { it.g } ?: 0,
-                runs.maxOfOrNull { it.b }?: 0)
-        }.sumOf { (r,g,b) -> r * g * b }
+                runs.maxOfOrNull { it.b } ?: 0)
+        }.sumOf { (r, g, b) -> r * g * b }
 
     }
 
