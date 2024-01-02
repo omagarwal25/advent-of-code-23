@@ -1,4 +1,4 @@
-private enum class Direction {
+private enum class LRDirection {
     LEFT, RIGHT
 }
 
@@ -15,8 +15,8 @@ fun main() {
         }
     }
 
-    fun parseInput(input: List<String>): Pair<List<Direction>, Map<String, Pair<String, String>>> {
-        val instructions = input[0].map { if (it == 'L') Direction.LEFT else Direction.RIGHT }
+    fun parseInput(input: List<String>): Pair<List<LRDirection>, Map<String, Pair<String, String>>> {
+        val instructions = input[0].map { if (it == 'L') LRDirection.LEFT else LRDirection.RIGHT }
         val rest = input.drop(2)
             .map { it.split(" = ") }.associate { (name, value) ->
                 name to (value
@@ -32,7 +32,7 @@ fun main() {
         return generateSequence("AAA" to 0) { (loc, i) ->
             val direction = instructions[i % instructions.size]
             val (f, s) = rest[loc]!!
-            val newLoc = if (direction == Direction.LEFT) f else s
+            val newLoc = if (direction == LRDirection.LEFT) f else s
             newLoc to (i + 1)
         }.takeWhile { (loc, _) -> !loc.endsWith("ZZZ") }.count()
     }
@@ -47,7 +47,7 @@ fun main() {
                 // use i to index into the instruction loop
                 val direction = instructions[i % instructions.size]
                 val (f, s) = rest[loc]!!
-                val newLoc = if (direction == Direction.LEFT) f else s
+                val newLoc = if (direction == LRDirection.LEFT) f else s
                 newLoc to (i + 1)
             }.takeWhile { (loc, _) -> !loc.endsWith("Z") }.count().toLong()
         }.reduce { acc, i -> findLCM(acc, i) }
